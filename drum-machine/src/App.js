@@ -68,98 +68,17 @@ const App = () => {
 
   const [displayText, setDisplayText] = React.useState('');
 
-  const playQ = () => {
+  const play = (event) => {
     var audio = document.getElementById('audio');
     audio.play();
 
-    setDisplayText(storage.Q.id);
-  };
-
-  const playW = () => {
-    var audio = document.getElementById('audio');
-    audio.play();
-
-    setDisplayText(storage.W.id);
-  };
-
-  const playE = () => {
-    var audio = document.getElementById('audio');
-    audio.play();
-
-    setDisplayText(storage.E.id);
-  };
-
-  const playA = () => {
-    var audio = document.getElementById('audio');
-    audio.play();
-
-    setDisplayText(storage.A.id);
-  };
-
-  const playS = () => {
-    var audio = document.getElementById('audio');
-    audio.play();
-
-    setDisplayText(storage.S.id);
-  };
-
-  const playD = () => {
-    var audio = document.getElementById('audio');
-    audio.play();
-
-    setDisplayText(storage.D.id);
-  };
-
-  const playZ = () => {
-    var audio = document.getElementById('audio');
-    audio.play();
-
-    setDisplayText(storage.Z.id);
-  };
-
-  const playX = () => {
-    var audio = document.getElementById('audio');
-    audio.play();
-
-    setDisplayText(storage.X.id);
-  };
-
-  const playC = () => {
-    var audio = document.getElementById('audio');
-    audio.play();
-
-    setDisplayText(storage.C.id);
+    setDisplayText(event);
   };
 
   const press = (event) => {
 
-    if(event.key === 'q') {
-      playQ();
-    }
-    if(event.key === 'w') {
-      playW();
-    }
-    if(event.key === 'e') {
-      playE();
-    }
-    if(event.key === 'a') {
-      playA();
-    }
-    if(event.key === 's') {
-      playS();
-    }
-    if(event.key === 'd') {
-      playD();
-    }
-    if(event.key === 'z') {
-      playZ();
-    }
-    if(event.key === 'x') {
-      playX();
-    }
-    if(event.key === 'c') {
-      playC();
-    }
+    var storageRetrival = `storage.${event.key.toUpperCase()}.id`;
+    play(eval(storageRetrival));
   }
 
 
@@ -170,25 +89,25 @@ const App = () => {
       <Display text={displayText} />
 
       {window.addEventListener('keydown', press)}
-      <Key keyId={"Q"} keyValue={"Q"} audioSource={storage.Q.url} playSound={playQ}/>
-      <Key keyId={"W"} keyValue={"W"} audioSource={storage.W.url} playSound={playW}/>
-      <Key keyId={"E"} keyValue={"E"} audioSource={storage.E.url} playSound={playE}/>
-      <Key keyId={"A"} keyValue={"A"} audioSource={storage.A.url} playSound={playA}/>
-      <Key keyId={"S"} keyValue={"S"} audioSource={storage.S.url} playSound={playS}/>
-      <Key keyId={"D"} keyValue={"D"} audioSource={storage.D.url} playSound={playD}/>
-      <Key keyId={"Z"} keyValue={"Z"} audioSource={storage.Z.url} playSound={playZ}/>
-      <Key keyId={"X"} keyValue={"X"} audioSource={storage.X.url} playSound={playX}/>
-      <Key keyId={"C"} keyValue={"C"} audioSource={storage.C.url} playSound={playC}/>
+      <Key keyId={"Q"} keyValue={"Q"} audioSource={storage.Q.url} playSound={play} text={storage.Q.id}/>
+      <Key keyId={"W"} keyValue={"W"} audioSource={storage.W.url} playSound={play} text={storage.W.id}/>
+      <Key keyId={"E"} keyValue={"E"} audioSource={storage.E.url} playSound={play} text={storage.E.id}/>
+      <Key keyId={"A"} keyValue={"A"} audioSource={storage.A.url} playSound={play} text={storage.A.id}/>
+      <Key keyId={"S"} keyValue={"S"} audioSource={storage.S.url} playSound={play} text={storage.S.id}/>
+      <Key keyId={"D"} keyValue={"D"} audioSource={storage.D.url} playSound={play} text={storage.D.id}/>
+      <Key keyId={"Z"} keyValue={"Z"} audioSource={storage.Z.url} playSound={play} text={storage.Z.id}/>
+      <Key keyId={"X"} keyValue={"X"} audioSource={storage.X.url} playSound={play} text={storage.X.id}/>
+      <Key keyId={"C"} keyValue={"C"} audioSource={storage.C.url} playSound={play} text={storage.C.id}/>
     </div>
   );
 }
 
 
-const Key = ({keyId, keyValue, audioSource, playSound}) => {
+const Key = ({keyId, keyValue, audioSource, playSound, text}) => {
 
   return (
     <div>
-      <button id={keyId} className="drum-pad" onClick={playSound}>{keyValue}</button>
+      <button id={keyId} className="drum-pad" onClick={() => playSound(text)}>{keyValue}</button>
       <audio id="audio" src={audioSource}/>
     </div>
   );
