@@ -68,17 +68,20 @@ const App = () => {
 
   const [displayText, setDisplayText] = React.useState('');
 
-  const play = (event) => {
-    var audio = document.getElementById('audio');
+  const play = (id) => {
+    var audioURL = `storage.${id}.url`;
+    var displayTextValue = eval(`storage.${id}.id`);
+
+    var audio = document.getElementById(id).children[0];
     audio.play();
 
-    setDisplayText(event);
+    setDisplayText(displayTextValue);
   };
+
 
   const press = (event) => {
 
-    var storageRetrival = `storage.${event.key.toUpperCase()}.id`;
-    play(eval(storageRetrival));
+    play(event.key.toUpperCase());
   }
 
 
@@ -89,15 +92,15 @@ const App = () => {
       <Display text={displayText} />
 
       {window.addEventListener('keydown', press)}
-      <Key keyId={"Q"} keyValue={"Q"} audioSource={storage.Q.url} playSound={play} text={storage.Q.id}/>
-      <Key keyId={"W"} keyValue={"W"} audioSource={storage.W.url} playSound={play} text={storage.W.id}/>
-      <Key keyId={"E"} keyValue={"E"} audioSource={storage.E.url} playSound={play} text={storage.E.id}/>
-      <Key keyId={"A"} keyValue={"A"} audioSource={storage.A.url} playSound={play} text={storage.A.id}/>
-      <Key keyId={"S"} keyValue={"S"} audioSource={storage.S.url} playSound={play} text={storage.S.id}/>
-      <Key keyId={"D"} keyValue={"D"} audioSource={storage.D.url} playSound={play} text={storage.D.id}/>
-      <Key keyId={"Z"} keyValue={"Z"} audioSource={storage.Z.url} playSound={play} text={storage.Z.id}/>
-      <Key keyId={"X"} keyValue={"X"} audioSource={storage.X.url} playSound={play} text={storage.X.id}/>
-      <Key keyId={"C"} keyValue={"C"} audioSource={storage.C.url} playSound={play} text={storage.C.id}/>
+      <Key keyId={"Q"} audioSource={storage.Q.url} playSound={play} />
+      <Key keyId={"W"} audioSource={storage.W.url} playSound={play} />
+      <Key keyId={"E"} audioSource={storage.E.url} playSound={play} />
+      <Key keyId={"A"} audioSource={storage.A.url} playSound={play} />
+      <Key keyId={"S"} audioSource={storage.S.url} playSound={play} />
+      <Key keyId={"D"} audioSource={storage.D.url} playSound={play} />
+      <Key keyId={"Z"} audioSource={storage.Z.url} playSound={play} />
+      <Key keyId={"X"} audioSource={storage.X.url} playSound={play} />
+      <Key keyId={"C"} audioSource={storage.C.url} playSound={play} />
     </div>
   );
 }
@@ -107,8 +110,10 @@ const Key = ({keyId, keyValue, audioSource, playSound, text}) => {
 
   return (
     <div>
-      <button id={keyId} className="drum-pad" onClick={() => playSound(text)}>{keyValue}</button>
-      <audio id="audio" src={audioSource}/>
+      <button id={keyId} className="drum-pad" onClick={() => playSound(keyId)}>
+        {keyId}
+        <audio id={keyId} className="clip" src={audioSource}/>
+      </button>
     </div>
   );
 }
